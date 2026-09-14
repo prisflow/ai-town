@@ -1,0 +1,473 @@
+{
+  "$defs": {
+    "AgentJSON": {
+      "additionalProperties": false,
+      "properties": {
+        "home_id": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "personality": {
+          "type": "string"
+        },
+        "role": {
+          "type": "string"
+        },
+        "tier": {
+          "type": "integer"
+        },
+        "traits": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "x": {
+          "type": "number"
+        },
+        "y": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "role",
+        "tier",
+        "personality",
+        "x",
+        "y",
+        "home_id"
+      ],
+      "type": "object"
+    },
+    "AgentView": {
+      "additionalProperties": false,
+      "properties": {
+        "action": {
+          "type": "string"
+        },
+        "carrying": {
+          "type": "integer"
+        },
+        "facing": {
+          "type": "integer"
+        },
+        "hidden": {
+          "type": "boolean"
+        },
+        "id": {
+          "type": "string"
+        },
+        "state": {
+          "type": "string"
+        },
+        "x": {
+          "type": "number"
+        },
+        "y": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "id",
+        "x",
+        "y",
+        "facing",
+        "state",
+        "action",
+        "carrying",
+        "hidden"
+      ],
+      "type": "object"
+    },
+    "BldJSON": {
+      "additionalProperties": false,
+      "properties": {
+        "complete": {
+          "type": "boolean"
+        },
+        "h": {
+          "type": "integer"
+        },
+        "id": {
+          "type": "string"
+        },
+        "kind": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "progress": {
+          "type": "integer"
+        },
+        "w": {
+          "type": "integer"
+        },
+        "x": {
+          "type": "integer"
+        },
+        "y": {
+          "type": "integer"
+        }
+      },
+      "required": [
+        "id",
+        "kind",
+        "name",
+        "x",
+        "y",
+        "w",
+        "h",
+        "progress",
+        "complete"
+      ],
+      "type": "object"
+    },
+    "BldState": {
+      "additionalProperties": false,
+      "properties": {
+        "complete": {
+          "type": "boolean"
+        },
+        "id": {
+          "type": "string"
+        },
+        "progress": {
+          "type": "integer"
+        }
+      },
+      "required": [
+        "id",
+        "progress",
+        "complete"
+      ],
+      "type": "object"
+    },
+    "JobView": {
+      "additionalProperties": false,
+      "properties": {
+        "claimed_by": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        },
+        "issued_by": {
+          "type": "string"
+        },
+        "issued_by_name": {
+          "type": "string"
+        },
+        "note": {
+          "type": "string"
+        },
+        "priority": {
+          "type": "integer"
+        },
+        "status": {
+          "type": "string"
+        },
+        "title": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "type",
+        "title",
+        "priority",
+        "status",
+        "claimed_by",
+        "note",
+        "issued_by",
+        "issued_by_name"
+      ],
+      "type": "object"
+    },
+    "ResJSON": {
+      "additionalProperties": false,
+      "properties": {
+        "amount": {
+          "type": "integer"
+        },
+        "id": {
+          "type": "string"
+        },
+        "kind": {
+          "type": "string"
+        },
+        "max": {
+          "type": "integer"
+        },
+        "x": {
+          "type": "integer"
+        },
+        "y": {
+          "type": "integer"
+        }
+      },
+      "required": [
+        "id",
+        "kind",
+        "x",
+        "y",
+        "amount",
+        "max"
+      ],
+      "type": "object"
+    },
+    "ResState": {
+      "additionalProperties": false,
+      "properties": {
+        "amount": {
+          "type": "integer"
+        },
+        "depleted": {
+          "type": "boolean"
+        },
+        "id": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "amount",
+        "depleted"
+      ],
+      "type": "object"
+    },
+    "SaveMeta": {
+      "additionalProperties": false,
+      "properties": {
+        "day": {
+          "type": "integer"
+        },
+        "exists": {
+          "type": "boolean"
+        },
+        "saved_at": {
+          "type": "string"
+        },
+        "world_name": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "exists",
+        "world_name",
+        "day",
+        "saved_at"
+      ],
+      "type": "object"
+    },
+    "SnapshotMsg": {
+      "additionalProperties": false,
+      "properties": {
+        "agents": {
+          "items": {
+            "$ref": "#/$defs/AgentView"
+          },
+          "type": "array"
+        },
+        "buildings": {
+          "items": {
+            "$ref": "#/$defs/BldState"
+          },
+          "type": "array"
+        },
+        "day": {
+          "type": "integer"
+        },
+        "domain": {
+          "additionalProperties": {
+            "type": "integer"
+          },
+          "type": "object"
+        },
+        "hour": {
+          "type": "number"
+        },
+        "jobs": {
+          "items": {
+            "$ref": "#/$defs/JobView"
+          },
+          "type": "array"
+        },
+        "paused": {
+          "type": "boolean"
+        },
+        "resources": {
+          "items": {
+            "$ref": "#/$defs/ResState"
+          },
+          "type": "array"
+        },
+        "season": {
+          "type": "string"
+        },
+        "stats": {
+          "$ref": "#/$defs/Stats"
+        },
+        "t": {
+          "type": "string"
+        },
+        "tick": {
+          "type": "integer"
+        }
+      },
+      "required": [
+        "t",
+        "tick",
+        "day",
+        "hour",
+        "paused",
+        "season",
+        "domain",
+        "agents",
+        "resources",
+        "buildings",
+        "jobs",
+        "stats"
+      ],
+      "type": "object"
+    },
+    "StateData": {
+      "additionalProperties": false,
+      "properties": {
+        "generating": {
+          "type": "boolean"
+        },
+        "has_world": {
+          "type": "boolean"
+        },
+        "save": {
+          "$ref": "#/$defs/SaveMeta"
+        },
+        "snapshot": {
+          "$ref": "#/$defs/SnapshotMsg"
+        },
+        "world": {
+          "$ref": "#/$defs/WorldJSON"
+        }
+      },
+      "required": [
+        "has_world",
+        "world",
+        "snapshot",
+        "generating",
+        "save"
+      ],
+      "type": "object"
+    },
+    "Stats": {
+      "additionalProperties": false,
+      "properties": {
+        "last_error": {
+          "type": "string"
+        },
+        "last_latency_ms": {
+          "type": "integer"
+        },
+        "llm_calls": {
+          "type": "integer"
+        },
+        "llm_errors": {
+          "type": "integer"
+        },
+        "tokens_in": {
+          "type": "integer"
+        },
+        "tokens_out": {
+          "type": "integer"
+        }
+      },
+      "required": [
+        "llm_calls",
+        "llm_errors",
+        "tokens_in",
+        "tokens_out",
+        "last_latency_ms"
+      ],
+      "type": "object"
+    },
+    "WorldJSON": {
+      "additionalProperties": false,
+      "properties": {
+        "agents": {
+          "items": {
+            "$ref": "#/$defs/AgentJSON"
+          },
+          "type": "array"
+        },
+        "buildings": {
+          "items": {
+            "$ref": "#/$defs/BldJSON"
+          },
+          "type": "array"
+        },
+        "day": {
+          "type": "integer"
+        },
+        "h": {
+          "type": "integer"
+        },
+        "hour": {
+          "type": "number"
+        },
+        "inventory": {
+          "additionalProperties": {
+            "type": "integer"
+          },
+          "type": "object"
+        },
+        "lore": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "resources": {
+          "items": {
+            "$ref": "#/$defs/ResJSON"
+          },
+          "type": "array"
+        },
+        "tiles": {
+          "items": {
+            "type": "integer"
+          },
+          "type": "array"
+        },
+        "w": {
+          "type": "integer"
+        }
+      },
+      "required": [
+        "name",
+        "lore",
+        "w",
+        "h",
+        "tiles",
+        "resources",
+        "buildings",
+        "agents",
+        "inventory",
+        "day",
+        "hour"
+      ],
+      "type": "object"
+    }
+  },
+  "$ref": "#/$defs/StateData",
+  "$schema": "https://json-schema.org/draft/2020-12/schema"
+}

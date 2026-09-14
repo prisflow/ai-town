@@ -1,0 +1,16 @@
+# 依赖与构建产物
+web/node_modules/
+web/dist/*
+!web/dist/.gitkeep
+/dist/
+build/bin/
+
+# 本地数据（配置密钥 / 存档 / 日志 —— 绝不入库）
+data/
+saves.db*
+*.log
+
+# 二进制
+aitown
+aitown.exe
+aitown-desktop.exe

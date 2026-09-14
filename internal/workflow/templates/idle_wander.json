@@ -1,0 +1,8 @@
+{
+  "id": "idle_wander",
+  "title": "散步",
+  "steps": [
+    { "type": "wander", "radius": 6 },
+    { "type": "wait", "seconds": 2 }
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "id": "build_farm",
+  "title": "开垦农田",
+  "roles": ["farmer", "villager", "builder"],
+  "requires": { "wood": 6 },
+  "steps": [
+    { "type": "goto", "target": "$site" },
+    { "type": "build", "target": "$site" },
+    { "type": "say", "ai": true, "prompt": "领地刚开垦出一片新农田。用一句不超过18字的中文、以农人口吻朴实地宣布，只输出台词。", "text": "地翻好了，就等下一场雨。", "secs": 5 }
+  ]
+}

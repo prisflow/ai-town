@@ -1,0 +1,10 @@
+{
+  "id": "farm_tend",
+  "title": "田间劳作",
+  "roles": ["farmer", "forager", "villager", "builder"],
+  "steps": [
+    { "type": "goto_nearest", "kind": "farm", "set": "farm", "max_range": 40 },
+    { "type": "tend", "target": "$farm", "units": 6 },
+    { "type": "say", "text": "田里的活干完了。", "secs": 3 }
+  ]
+}

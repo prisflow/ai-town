@@ -1,0 +1,138 @@
+{
+  "$defs": {
+    "Config": {
+      "additionalProperties": false,
+      "properties": {
+        "debug": {
+          "type": "boolean"
+        },
+        "limits": {
+          "$ref": "#/$defs/LimitsConfig"
+        },
+        "pacing": {
+          "$ref": "#/$defs/PacingConfig"
+        },
+        "providers": {
+          "additionalProperties": {
+            "$ref": "#/$defs/ProviderConfig"
+          },
+          "type": "object"
+        },
+        "roles": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "type": "object"
+        }
+      },
+      "required": [
+        "providers",
+        "roles",
+        "limits",
+        "pacing",
+        "debug"
+      ],
+      "type": "object"
+    },
+    "LimitsConfig": {
+      "additionalProperties": false,
+      "properties": {
+        "conv_cap": {
+          "type": "integer"
+        },
+        "llm_timeout_sec": {
+          "type": "integer"
+        },
+        "max_concurrent": {
+          "type": "integer"
+        },
+        "official_cap": {
+          "type": "integer"
+        },
+        "rpm": {
+          "type": "integer"
+        },
+        "temperatures": {
+          "additionalProperties": {
+            "type": "number"
+          },
+          "type": "object"
+        }
+      },
+      "required": [
+        "max_concurrent",
+        "rpm",
+        "official_cap",
+        "conv_cap",
+        "llm_timeout_sec"
+      ],
+      "type": "object"
+    },
+    "PacingConfig": {
+      "additionalProperties": false,
+      "properties": {
+        "chat_cooldown_sec": {
+          "type": "integer"
+        },
+        "chat_rounds": {
+          "type": "integer"
+        },
+        "day_break": {
+          "type": "number"
+        },
+        "event_chance": {
+          "type": "integer"
+        },
+        "night_end": {
+          "type": "number"
+        },
+        "night_start": {
+          "type": "number"
+        },
+        "startup_officials": {
+          "type": "integer"
+        },
+        "think_cooldown_sec": {
+          "type": "integer"
+        }
+      },
+      "required": [
+        "think_cooldown_sec",
+        "chat_cooldown_sec",
+        "chat_rounds",
+        "event_chance",
+        "startup_officials",
+        "night_start",
+        "night_end",
+        "day_break"
+      ],
+      "type": "object"
+    },
+    "ProviderConfig": {
+      "additionalProperties": false,
+      "properties": {
+        "api_key": {
+          "type": "string"
+        },
+        "base_url": {
+          "type": "string"
+        },
+        "model": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "type",
+        "base_url",
+        "api_key",
+        "model"
+      ],
+      "type": "object"
+    }
+  },
+  "$ref": "#/$defs/Config",
+  "$schema": "https://json-schema.org/draft/2020-12/schema"
+}

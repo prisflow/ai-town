@@ -1,0 +1,12 @@
+{
+  "id": "grind",
+  "title": "磨面",
+  "roles": ["farmer", "builder", "villager", "woodcutter", "forager"],
+  "requires": { "wheat": 6 },
+  "steps": [
+    { "type": "goto_nearest", "kind": "mill", "set": "mill", "max_range": 40 },
+    { "type": "withdraw", "resource": "wheat", "amount": 6 },
+    { "type": "work", "kind": "grind", "target": "$mill", "units": 3 },
+    { "type": "say", "text": "麦子磨成面粉了。", "secs": 3 }
+  ]
+}

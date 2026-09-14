@@ -1,0 +1,34 @@
+{
+  "$defs": {
+    "EventMsg": {
+      "additionalProperties": false,
+      "properties": {
+        "cat": {
+          "type": "string"
+        },
+        "day": {
+          "type": "integer"
+        },
+        "hour": {
+          "type": "number"
+        },
+        "t": {
+          "type": "string"
+        },
+        "text": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "t",
+        "cat",
+        "text",
+        "day",
+        "hour"
+      ],
+      "type": "object"
+    }
+  },
+  "$ref": "#/$defs/EventMsg",
+  "$schema": "https://json-schema.org/draft/2020-12/schema"
+}

@@ -1,0 +1,9 @@
+{
+  "id": "sleep",
+  "title": "睡觉",
+  "steps": [
+    { "type": "goto", "target": "home" },
+    { "type": "sleep" },
+    { "type": "say", "text": "早安，新的一天。", "secs": 3 }
+  ]
+}

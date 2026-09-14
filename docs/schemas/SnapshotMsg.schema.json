@@ -1,0 +1,232 @@
+{
+  "$defs": {
+    "AgentView": {
+      "additionalProperties": false,
+      "properties": {
+        "action": {
+          "type": "string"
+        },
+        "carrying": {
+          "type": "integer"
+        },
+        "facing": {
+          "type": "integer"
+        },
+        "hidden": {
+          "type": "boolean"
+        },
+        "id": {
+          "type": "string"
+        },
+        "state": {
+          "type": "string"
+        },
+        "x": {
+          "type": "number"
+        },
+        "y": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "id",
+        "x",
+        "y",
+        "facing",
+        "state",
+        "action",
+        "carrying",
+        "hidden"
+      ],
+      "type": "object"
+    },
+    "BldState": {
+      "additionalProperties": false,
+      "properties": {
+        "complete": {
+          "type": "boolean"
+        },
+        "id": {
+          "type": "string"
+        },
+        "progress": {
+          "type": "integer"
+        }
+      },
+      "required": [
+        "id",
+        "progress",
+        "complete"
+      ],
+      "type": "object"
+    },
+    "JobView": {
+      "additionalProperties": false,
+      "properties": {
+        "claimed_by": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        },
+        "issued_by": {
+          "type": "string"
+        },
+        "issued_by_name": {
+          "type": "string"
+        },
+        "note": {
+          "type": "string"
+        },
+        "priority": {
+          "type": "integer"
+        },
+        "status": {
+          "type": "string"
+        },
+        "title": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "type",
+        "title",
+        "priority",
+        "status",
+        "claimed_by",
+        "note",
+        "issued_by",
+        "issued_by_name"
+      ],
+      "type": "object"
+    },
+    "ResState": {
+      "additionalProperties": false,
+      "properties": {
+        "amount": {
+          "type": "integer"
+        },
+        "depleted": {
+          "type": "boolean"
+        },
+        "id": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "amount",
+        "depleted"
+      ],
+      "type": "object"
+    },
+    "SnapshotMsg": {
+      "additionalProperties": false,
+      "properties": {
+        "agents": {
+          "items": {
+            "$ref": "#/$defs/AgentView"
+          },
+          "type": "array"
+        },
+        "buildings": {
+          "items": {
+            "$ref": "#/$defs/BldState"
+          },
+          "type": "array"
+        },
+        "day": {
+          "type": "integer"
+        },
+        "domain": {
+          "additionalProperties": {
+            "type": "integer"
+          },
+          "type": "object"
+        },
+        "hour": {
+          "type": "number"
+        },
+        "jobs": {
+          "items": {
+            "$ref": "#/$defs/JobView"
+          },
+          "type": "array"
+        },
+        "paused": {
+          "type": "boolean"
+        },
+        "resources": {
+          "items": {
+            "$ref": "#/$defs/ResState"
+          },
+          "type": "array"
+        },
+        "season": {
+          "type": "string"
+        },
+        "stats": {
+          "$ref": "#/$defs/Stats"
+        },
+        "t": {
+          "type": "string"
+        },
+        "tick": {
+          "type": "integer"
+        }
+      },
+      "required": [
+        "t",
+        "tick",
+        "day",
+        "hour",
+        "paused",
+        "season",
+        "domain",
+        "agents",
+        "resources",
+        "buildings",
+        "jobs",
+        "stats"
+      ],
+      "type": "object"
+    },
+    "Stats": {
+      "additionalProperties": false,
+      "properties": {
+        "last_error": {
+          "type": "string"
+        },
+        "last_latency_ms": {
+          "type": "integer"
+        },
+        "llm_calls": {
+          "type": "integer"
+        },
+        "llm_errors": {
+          "type": "integer"
+        },
+        "tokens_in": {
+          "type": "integer"
+        },
+        "tokens_out": {
+          "type": "integer"
+        }
+      },
+      "required": [
+        "llm_calls",
+        "llm_errors",
+        "tokens_in",
+        "tokens_out",
+        "last_latency_ms"
+      ],
+      "type": "object"
+    }
+  },
+  "$ref": "#/$defs/SnapshotMsg",
+  "$schema": "https://json-schema.org/draft/2020-12/schema"
+}

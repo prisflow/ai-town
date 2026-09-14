@@ -1,0 +1,22 @@
+{
+  "$defs": {
+    "EdictMsg": {
+      "additionalProperties": false,
+      "properties": {
+        "t": {
+          "type": "string"
+        },
+        "text": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "t",
+        "text"
+      ],
+      "type": "object"
+    }
+  },
+  "$ref": "#/$defs/EdictMsg",
+  "$schema": "https://json-schema.org/draft/2020-12/schema"
+}

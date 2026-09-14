@@ -1,0 +1,8 @@
+{
+  "id": "chat_with",
+  "title": "找人聊天",
+  "steps": [
+    { "type": "goto", "target": "$target" },
+    { "type": "talk", "partner": "$target", "topic": "$topic", "rounds": 2 }
+  ]
+}

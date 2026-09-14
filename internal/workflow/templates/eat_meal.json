@@ -1,0 +1,9 @@
+{
+  "id": "eat_meal",
+  "title": "吃饭",
+  "steps": [
+    { "type": "goto", "target": "keep" },
+    { "type": "eat" },
+    { "type": "say", "text": "吃饱了，又有力气干活了。", "secs": 3 }
+  ]
+}

@@ -1,0 +1,20 @@
+{
+  "$schema": "https://wails.io/schemas/config.v2.json",
+  "version": "2",
+  "name": "aitown",
+  "build:tags": "wails",
+  "outputfilename": "aitown-desktop",
+  "frontend:dir": "web",
+  "frontend:install": "",
+  "frontend:build": "",
+  "frontend:dev:watcher": "",
+  "frontend:dev:serverUrl": "",
+  "wailsjsdir": "web/src/wailsjs",
+  "info": {
+    "companyName": "ai-town",
+    "productName": "AI 领地",
+    "productVersion": "0.1.0",
+    "copyright": "Copyright 2026 ai-town",
+    "comments": "BYOK AI 小镇沙盒（本地单机）"
+  }
+}

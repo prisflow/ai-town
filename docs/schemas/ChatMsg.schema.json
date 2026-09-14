@@ -1,0 +1,46 @@
+{
+  "$defs": {
+    "ChatMsg": {
+      "additionalProperties": false,
+      "properties": {
+        "day": {
+          "type": "integer"
+        },
+        "from": {
+          "type": "string"
+        },
+        "from_name": {
+          "type": "string"
+        },
+        "hour": {
+          "type": "number"
+        },
+        "t": {
+          "type": "string"
+        },
+        "text": {
+          "type": "string"
+        },
+        "to": {
+          "type": "string"
+        },
+        "to_name": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "t",
+        "from",
+        "from_name",
+        "to",
+        "to_name",
+        "text",
+        "day",
+        "hour"
+      ],
+      "type": "object"
+    }
+  },
+  "$ref": "#/$defs/ChatMsg",
+  "$schema": "https://json-schema.org/draft/2020-12/schema"
+}

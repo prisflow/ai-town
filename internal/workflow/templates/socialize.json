@@ -1,0 +1,20 @@
+{
+  "id": "socialize",
+  "title": "闲聊",
+  "steps": [
+    { "type": "ai_choice", "prompt": "你正要和邻居闲聊，选一个话题：", "options": [
+      { "label": "今年的收成", "steps": [
+        { "type": "talk", "topic": "今年的收成", "rounds": 2 },
+        { "type": "say", "text": "聊完收成，心里踏实多了。", "secs": 3 }
+      ] },
+      { "label": "领主的指令", "steps": [
+        { "type": "talk", "topic": "领主的新指令", "rounds": 2 },
+        { "type": "say", "text": "领主的心思，咱算是明白了。", "secs": 3 }
+      ] },
+      { "label": "森林的传闻", "steps": [
+        { "type": "talk", "topic": "森林里的传闻", "rounds": 2 },
+        { "type": "say", "text": "林子里的传闻，听着就带劲。", "secs": 3 }
+      ] }
+    ] }
+  ]
+}

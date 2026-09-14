@@ -1,0 +1,11 @@
+{
+  "id": "build_mill",
+  "title": "建造磨坊",
+  "roles": ["builder", "villager", "woodcutter", "farmer"],
+  "requires": { "wood": 12, "stone": 8 },
+  "steps": [
+    { "type": "goto", "target": "$site" },
+    { "type": "build", "target": "$site" },
+    { "type": "say", "ai": true, "prompt": "领地刚建成一座磨坊，小麦终于能磨成面粉了。用一句不超过18字的中文、以建造者口吻朴实地宣布，只输出台词。", "text": "磨坊转起来了，麦子有去处了。", "secs": 5 }
+  ]
+}

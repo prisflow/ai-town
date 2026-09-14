@@ -1,0 +1,12 @@
+{
+  "id": "gather_stone",
+  "title": "开采石料",
+  "roles": ["builder", "woodcutter", "villager"],
+  "steps": [
+    { "type": "goto_nearest", "kind": "rock", "set": "rock", "max_range": 40 },
+    { "type": "harvest", "target": "$rock" },
+    { "type": "goto", "target": "keep" },
+    { "type": "deposit" },
+    { "type": "say", "text": "石头都码在仓库门口了。", "secs": 4 }
+  ]
+}

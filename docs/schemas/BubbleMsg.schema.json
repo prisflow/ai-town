@@ -1,0 +1,30 @@
+{
+  "$defs": {
+    "BubbleMsg": {
+      "additionalProperties": false,
+      "properties": {
+        "actor": {
+          "type": "string"
+        },
+        "secs": {
+          "type": "number"
+        },
+        "t": {
+          "type": "string"
+        },
+        "text": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "t",
+        "actor",
+        "text",
+        "secs"
+      ],
+      "type": "object"
+    }
+  },
+  "$ref": "#/$defs/BubbleMsg",
+  "$schema": "https://json-schema.org/draft/2020-12/schema"
+}

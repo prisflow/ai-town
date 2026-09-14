@@ -1,0 +1,12 @@
+{
+  "id": "gather_food",
+  "title": "采集浆果",
+  "roles": ["forager", "farmer", "villager", "builder", "woodcutter"],
+  "steps": [
+    { "type": "goto_nearest", "kind": "berry", "set": "bush", "max_range": 40 },
+    { "type": "harvest", "target": "$bush" },
+    { "type": "goto", "target": "keep" },
+    { "type": "deposit" },
+    { "type": "say", "text": "新鲜的浆果入库咯。", "secs": 4 }
+  ]
+}

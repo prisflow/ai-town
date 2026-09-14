@@ -1,0 +1,12 @@
+{
+  "id": "gather_wood",
+  "title": "伐木",
+  "roles": ["woodcutter", "builder", "villager", "forager", "farmer"],
+  "steps": [
+    { "type": "goto_nearest", "kind": "tree", "set": "tree", "max_range": 40 },
+    { "type": "harvest", "target": "$tree" },
+    { "type": "goto", "target": "keep" },
+    { "type": "deposit" },
+    { "type": "say", "text": "这趟砍的木头交进仓库了。", "secs": 4 }
+  ]
+}

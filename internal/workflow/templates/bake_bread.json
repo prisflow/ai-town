@@ -1,0 +1,13 @@
+{
+  "id": "bake_bread",
+  "title": "烘焙面包",
+  "roles": ["farmer", "builder", "villager", "woodcutter", "forager"],
+  "requires": { "flour": 3, "food": 6 },
+  "steps": [
+    { "type": "withdraw", "resource": "flour", "amount": 3 },
+    { "type": "withdraw", "resource": "food", "amount": 6 },
+    { "type": "goto_nearest", "kind": "mill", "set": "mill", "max_range": 40 },
+    { "type": "work", "kind": "bake", "target": "$mill", "units": 3 },
+    { "type": "say", "text": "热乎乎的面包出炉啦。", "secs": 4 }
+  ]
+}

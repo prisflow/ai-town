@@ -1,0 +1,11 @@
+{
+  "id": "build_house",
+  "title": "建造民居",
+  "roles": ["builder", "villager", "woodcutter", "farmer", "forager"],
+  "requires": { "wood": 10 },
+  "steps": [
+    { "type": "goto", "target": "$site" },
+    { "type": "build", "target": "$site" },
+    { "type": "say", "ai": true, "prompt": "领地刚建成一座新房屋。用一句不超过18字的中文、以建造者口吻朴实地宣布这件事，只输出台词。", "text": "房子建好了，今晚能睡个好觉。", "secs": 5 }
+  ]
+}

@@ -1,0 +1,99 @@
+name: Release
+
+on:
+  push:
+    tags: ['v*']
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: 安装 Go
+        uses: actions/setup-go@v5
+        with:
+          go-version-file: go.mod
+          cache: true
+
+      - name: 安装 Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+          cache-dependency-path: web/package-lock.json
+
+      - name: 构建前端（tsc + vite）
+        working-directory: web
+        run: |
+          npm ci
+          npm run build
+
+      - name: 后端测试（发布把关）
+        run: go test ./... -count=1
+
+      - name: 解析版本号
+        id: ver
+        shell: pwsh
+        run: |
+          if ($env:GITHUB_REF_TYPE -eq 'tag') {
+            $v = $env:GITHUB_REF_NAME
+          } else {
+            $v = 'dev-' + $env:GITHUB_SHA.Substring(0, 7)
+          }
+          "version=$v" | Out-File -FilePath $env:GITHUB_OUTPUT -Append
+          Write-Host "version=$v"
+
+      - name: 构建浏览器版
+        shell: pwsh
+        run: |
+          New-Item -ItemType Directory -Force -Path dist | Out-Null
+          go build -trimpath -ldflags "-s -w -X main.version=${{ steps.ver.outputs.version }}" -o dist/aitown-browser.exe .
+
+      - name: 安装 Wails CLI
+        shell: pwsh
+        run: |
+          go install github.com/wailsapp/wails/v2/cmd/wails@v2.15.0
+          Add-Content -Path $env:GITHUB_PATH -Value "$(go env GOPATH)\bin"
+
+      - name: 构建桌面版
+        shell: pwsh
+        run: |
+          wails build -s -clean -skipbindings -skipembedcreate -nosyncgomod -m `
+            -ldflags "-s -w -X main.version=${{ steps.ver.outputs.version }}" `
+            -o aitown-desktop.exe
+          Copy-Item build/bin/aitown-desktop.exe dist/aitown-desktop.exe
+
+      - name: 打包与校验和
+        shell: pwsh
+        run: |
+          $v = "${{ steps.ver.outputs.version }}"
+          Compress-Archive -Path dist/aitown-desktop.exe, LICENSE -DestinationPath "dist/ai-town_desktop_${v}_windows_amd64.zip" -Force
+          Compress-Archive -Path dist/aitown-browser.exe, LICENSE -DestinationPath "dist/ai-town_browser_${v}_windows_amd64.zip" -Force
+          Get-ChildItem dist/*.zip | ForEach-Object {
+            $h = (Get-FileHash $_.FullName -Algorithm SHA256).Hash.ToLower()
+            "$h  $($_.Name)"
+          } | Set-Content dist/SHA256SUMS
+          Get-Content dist/SHA256SUMS
+
+      - name: 发布 Release（tag 触发）
+        if: startsWith(github.ref, 'refs/tags/')
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            dist/*.zip
+            dist/SHA256SUMS
+          generate_release_notes: true
+
+      - name: 上传构建产物（手动触发）
+        if: ${{ !startsWith(github.ref, 'refs/tags/') }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: ai-town-windows
+          path: |
+            dist/*.zip
+            dist/SHA256SUMS
