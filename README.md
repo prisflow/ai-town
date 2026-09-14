@@ -13,11 +13,9 @@
 
 ## 📺 实机演示
 
-<!-- TODO: 录制后把下面注释替换为 GitHub 附件链接（拖拽视频到 issue 输入框即可获得）：
-<video controls muted src="https://github.com/user-attachments/assets/待替换" width="720"></video>
--->
+<video controls src="https://github.com/user-attachments/assets/1b9ca570-6e01-4186-9821-1d10d342238c" width="720"></video>
 
-> 实机视频录制中，首版发布后补上。想先看效果：下载下面的桌面版，双击即可开玩。
+（若视频未能内嵌播放，[点此直接观看](https://github.com/user-attachments/assets/1b9ca570-6e01-4186-9821-1d10d342238c)；想亲自体验：下载下面的桌面版，双击即可开玩。）
 
 ## 核心特性
 
