@@ -362,28 +362,74 @@ func TestWorldEvents(t *testing.T) {
 	}
 }
 
+// TestConversationsHappen 对话链路：直接发起一场官员对话，断言台词帧产生、
+// 轮转正常收尾、双方回到非对话态。
+// 注意不依赖"官员自己选中 socialize"的涌现时序——那受 goroutine 调度影响，
+// CI 上曾在 20s 预算内偶发失败；涌现行为由 mock 的 intent 轮换覆盖，
+// 本测试只锁定对话机制本身（邀请 → 逐句生成 → 关系结算 → EvChatDone 清理）。
 func TestConversationsHappen(t *testing.T) {
 	e, hub := newTestEngine(t)
-	e.CreateWorld("测试")
+	if err := e.CreateWorld("测试"); err != nil {
+		t.Fatal(err)
+	}
 	pumpUntil(e, func() bool { return e.HasWorld() }, 100)
-	// 村民的思考节奏是真实心跳（1s），这里以真实时间预算等待闲聊自然发生
-	if !pumpUntil(e, func() bool { return hub.chatCount() > 0 }, 20000) {
-		t.Fatal("多个游戏日内应产生居民对话")
-	}
-	// 等待在途对话收尾（最后一个 LLM 回调需要回流邮箱）
-	deadline := time.Now().Add(3 * time.Second)
-	for time.Now().Before(deadline) && len(e.convos) > 0 {
-		e.tickOnce(0.1)
-		time.Sleep(500 * time.Microsecond)
-	}
-	if len(e.convos) > 0 {
-		t.Fatal("对话应能正常结束，不应永久卡在途")
-	}
-	for id, ag := range e.agents {
-		if ag.talkingWith != "" {
-			t.Fatalf("%s 的对话未能正常结束", e.cits[id].Name)
+	freezeAll(e, false) // 冻结思考：排除官员自主工作流抢位，纯粹测对话机制
+
+	e.mu.Lock()
+	var officials []string
+	for _, id := range e.ord {
+		if c := e.cits[id]; c != nil && c.Tier == TierOfficial {
+			officials = append(officials, id)
 		}
 	}
+	if len(officials) < 2 {
+		e.mu.Unlock()
+		t.Fatalf("需要至少两名官员才能对话，实际 %d", len(officials))
+	}
+	aID, bID := officials[0], officials[1]
+	// 原地触发要求两人凑在一起（距离 ≤3）：直接摆到相邻格
+	pa, pb := e.world.Actors[aID], e.world.Actors[bID]
+	if pa == nil || pb == nil {
+		e.mu.Unlock()
+		t.Fatal("官员实体不存在")
+	}
+	pa.X, pa.Y = 10.5, 10.5
+	pb.X, pb.Y = 11.5, 10.5
+	_, err := e.startConversationBetween(aID, bID, "今年的收成", 2)
+	e.mu.Unlock()
+	if err != nil {
+		t.Fatalf("应能发起对话: %v", err)
+	}
+
+	// 驱动世界直到：至少产生一句台词，且对话已收尾（convos 清空）
+	if !pumpUntil(e, func() bool {
+		e.mu.Lock()
+		defer e.mu.Unlock()
+		return hub.chatCount() > 0 && len(e.convos) == 0
+	}, 3000) {
+		e.mu.Lock()
+		n := len(e.convos)
+		e.mu.Unlock()
+		t.Fatalf("对话应产生台词并正常收尾（剩余在途 %d）", n)
+	}
+
+	// 收尾通知经信箱异步到达：等双方清除对话态
+	deadline := time.Now().Add(2 * time.Second)
+	for time.Now().Before(deadline) {
+		e.mu.Lock()
+		left := 0
+		for _, ag := range e.agents {
+			if ag.talkingWith != "" {
+				left++
+			}
+		}
+		e.mu.Unlock()
+		if left == 0 {
+			return
+		}
+		time.Sleep(5 * time.Millisecond)
+	}
+	t.Fatal("对话结束后双方应清除对话态")
 }
 
 // freezeAll 冻结全部村民并可令其入睡（测试钩子：避免真实心跳干扰时间线断言）。
